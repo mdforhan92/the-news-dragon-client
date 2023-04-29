@@ -1,17 +1,42 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../providers/AuthProvider';
 
 const Register = () => {
+    const { createUser } = useContext(AuthContext);
+
+    const handleRegister = event => {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.name.value;
+        const email = form.email.value;
+        const photo = form.photo.value;
+        const password = form.password.value;
+
+        console.log(name, photo, email, password)
+
+        createUser(email, password)
+            .then(result => {
+                const createdUser = result.user;
+                console.log(createdUser);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+
+
+
     return (
         <Container className='w-25 mx-auto mt-4'>
             <h3>Please Login</h3>
-            <Form>
+            <Form onSubmit={handleRegister}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="email" name='name' placeholder="Your Name" required />
+                    <Form.Control type="text" name='name' placeholder="Your Name" required />
                     <Form.Label>Photo URL</Form.Label>
                     <Form.Control type="text" name='photo' placeholder="Photo URl" required />
                     <Form.Label>Email address</Form.Label>
