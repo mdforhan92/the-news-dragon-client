@@ -21,8 +21,14 @@ const RightNav = () => {
                 </ListGroup>
             </div>
             <QZone></QZone>
-            <div>
-                <img src={bg} alt="" />
+            <div class="card bg-dark text-white text-center">
+                <img className="card-img " src={bg} />
+                <div className="card-img-overlay">
+                    <h4 className="card-title mt-5 ">Contact With Developer</h4>
+                    <p className="card-text mt-4">If you want to build your own website contact with me.</p>
+                    <p>Email: mdforhan92@gmail.com</p>
+                    <p>Contact: 01819365933</p>
+                </div>
             </div>
         </div>
     );
