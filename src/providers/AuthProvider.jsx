@@ -7,24 +7,29 @@ export const AuthContext = createContext(null);
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
     const [user , setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     //Register authentication
     const createUser = (email, password) => {
+        setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
     }
     //login authentication
     const signIn = ( email , password)=>{
+        setLoading(true);
         return signInWithEmailAndPassword(auth, email, password)
     }
     //SignOut
     const logOut = () =>{
+        setLoading(true);
         return signOut(auth);
     }
     //save contain auth
     useEffect(()=>{
         const unsubscribe = onAuthStateChanged(auth, loggedUser =>{
             console.log('logged in user inside auth state observer', loggedUser)
-            setUser(loggedUser)
+            setUser(loggedUser);
+            setLoading(false);
         })
         return () =>{
             unsubscribe();
@@ -35,7 +40,8 @@ const AuthProvider = ({ children }) => {
         user,
         createUser,
         signIn,
-        logOut
+        logOut,
+        loading
 
     }
 
